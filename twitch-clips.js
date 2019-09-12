@@ -1,4 +1,7 @@
 
+const config = require("./config.json");
+const request = require("./await-request");
+
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
 }
