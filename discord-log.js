@@ -1,4 +1,5 @@
 const request = require("./await-request");
+const config = require("./config.json");
 
 async function post_log_message(title, desc, url = "https://akriya.co.in") {
     let headers = { 'Content-Type': 'application/x-www-form-urlencoded' };

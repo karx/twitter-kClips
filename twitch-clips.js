@@ -75,17 +75,17 @@ async function getRandomClipFromTwitch() {
 
         const topGames = await request({
             method: 'get',
-            url: 'https://api.twitch.tv/kraken/games/top',
+            url: 'https://api.twitch.tv/helix/games/top',
             params: { limit: 20 },
             headers: headers,
             json: true,
         });
-        console.log(topGames);
-        const countOfGames = topGames['top'].length;
-        var topGame = topGames['top'][getRandomInt(countOfGames)];
-        console.log(topGame);
-        var topGameId = topGame['game']['_id'];
-        var topGameName = topGame['game']['name'];
+        console.log("from Twitch:" ,topGames);
+        const countOfGames = topGames['data'].length;
+        var topGame = topGames['data'][getRandomInt(countOfGames)];
+        console.log("top Game: " , topGame);
+        var topGameId = topGame['id'];
+        var topGameName = topGame['name'];
         console.log(topGameId);
         const topClips = await request({
             method: 'get',
