@@ -30,7 +30,7 @@ async function post_a_tweet() {
     
 }
 
-const job = new CronJob('*/2 * * * * *', function() {
+const job = new CronJob('0 10 */4 * * *', function() {
     console.log('You will see this message every second');
     post_a_tweet();
   });
