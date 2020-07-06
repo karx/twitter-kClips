@@ -71,7 +71,7 @@ async function getSteamerClipFromTwitch(broadcaster_name) {
 }
 
 async function getRandomClipFromTwitch() {
-    let headers = { 'Client-ID': config.twitch_clientID }
+    let headers = { 'Client-ID': config.twitch_clientID, 'Authorization': 'Bearer ' + config.twitch_secret }
 
         const topGames = await request({
             method: 'get',
