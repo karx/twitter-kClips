@@ -2,6 +2,7 @@
 const Twitter = require('twitter');
 const config = require("./config.json");
 const { post_log_message } = require("./discord-log");
+const { titleCaseWithoutSpace } = require("./string-utils");
 const { getSteamerClipFromTwitch, getRandomClipFromTwitch } = require("./twitch-clips");
 const CronJob = require('cron').CronJob;
 
@@ -14,9 +15,11 @@ var T = new Twitter({
 
 async function post_a_tweet() {
     var embed_to_send = await getRandomClipFromTwitch();
-    console.log(embed_to_send);
+    let game_name = embed_to_send.game;
+    let gameHashTag = titleCaseWithoutSpace(game_name);
+
     T.post("statuses/update", {
-        status: `Checkout this Clip of \`${embed_to_send.streamer}\` playing \`${embed_to_send.game}\` \n${embed_to_send.url}`
+        status: `Checkout this Clip of @${embed_to_send.streamer} playing ${embed_to_send.game}. \n\n#${gameHashTag} \n${embed_to_send.url}`
         // attachment_url: embed_to_send.url //<== Oops, only ment for Twitter URLs
     }, function(error, tweet, response) {
         if(error) throw error;
@@ -35,5 +38,5 @@ const job = new CronJob('0 10 */4 * * *', function() {
     post_a_tweet();
   });
 
-  job.start();
-//   post_a_tweet();
+//   job.start();
+  post_a_tweet();
