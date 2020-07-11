@@ -80,13 +80,13 @@ async function getRandomClipFromTwitch() {
             headers: headers,
             json: true,
         });
-        console.log("from Twitch:" ,topGames);
+        // console.log("from Twitch:" ,topGames);
         const countOfGames = topGames['data'].length;
         var topGame = topGames['data'][getRandomInt(countOfGames)];
-        console.log("top Game: " , topGame);
+        console.log("Random top Game of Run: " , topGame);
         var topGameId = topGame['id'];
         var topGameName = topGame['name'];
-        console.log(topGameId);
+        // console.log(topGameId);
         const topClips = await request({
             method: 'get',
             url: 'https://api.twitch.tv/helix/clips',
