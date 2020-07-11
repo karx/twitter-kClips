@@ -39,5 +39,5 @@ const job = new CronJob('0 10 */4 * * *', function() {
     post_a_tweet();
   });
 
-//   job.start();
-  post_a_tweet();
+  job.start();
+//   post_a_tweet();
