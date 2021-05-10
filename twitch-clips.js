@@ -1,9 +1,23 @@
 
 const config = require("./config.json");
 const request = require("./await-request");
-
+let hasToken = false;
 function getRandomInt(max) {
     return Math.floor(Math.random() * Math.floor(max));
+}
+
+async function getAccessTokenFromTwitch() {
+    if (!hasToken) {
+        const oauthRequest = await request({
+            method: 'post',
+            url: 'https://id.twitch.tv/oauth2/token',
+            qs: { 'client_id': config.twitch_clientID, 'client_secret': config.twitch_secret, 'grant_type':'client_credentials', 'scope':'' },
+            json: true
+        });
+        hasToken = oauthRequest.access_token
+        return oauthRequest.access_token;
+    } else return hasToken;
+    
 }
 
 async function getSteamerClipFromTwitch(broadcaster_name) {
@@ -71,7 +85,9 @@ async function getSteamerClipFromTwitch(broadcaster_name) {
 }
 
 async function getRandomClipFromTwitch() {
-    let headers = { 'Client-ID': config.twitch_clientID, 'Authorization': 'Bearer ' + config.twitch_secret }
+    let twitch_access_code = await getAccessTokenFromTwitch();
+    // console.log({twitch_access_code});
+    let headers = { 'Client-ID': config.twitch_clientID, 'Authorization': 'Bearer ' +  twitch_access_code}
 
         const topGames = await request({
             method: 'get',
