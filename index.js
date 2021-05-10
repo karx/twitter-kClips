@@ -1,16 +1,17 @@
 
+require('dotenv').config();
 const Twitter = require('twitter');
-const config = require("./config.json");
+
 const { post_log_message } = require("./discord-log");
 const { titleCaseWithoutSpace } = require("./string-utils");
 const { getSteamerClipFromTwitch, getRandomClipFromTwitch } = require("./twitch-clips");
 const CronJob = require('cron').CronJob;
 
 var T = new Twitter({
-    consumer_key: config.twitter_consumer_key,
-    consumer_secret: config.twitter_consumer_secret,
-    access_token_key: config.twitter_access_token_key,
-    access_token_secret: config.twitter_access_token_secret
+    consumer_key: process.env.twitter_consumer_key,
+    consumer_secret: process.env.twitter_consumer_secret,
+    access_token_key: process.env.twitter_access_token_key,
+    access_token_secret: process.env.twitter_access_token_secret
 });
 
 async function post_a_tweet() {
